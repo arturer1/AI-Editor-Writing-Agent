@@ -2,13 +2,14 @@ import sqlite3
 import json
 from pydantic import BaseModel, Field
 from typing import List, Optional
+from config import Config
 
-# --- Pydantic Data Schemas for Extraction ---
 class CharacterUpdate(BaseModel):
     name: str = Field(description="Name of the character")
-    traits: Optional[List[str]] = Field(description="New physical or personality traits revealed")
-    knowledge_gained: Optional[List[str]] = Field(description="Facts this character learned in this chapter")
-    knowledge_lacks: Optional[List[str]] = Field(description="Explicit facts this character is UNAWARE of")
+    age: Optional[str] = Field(default=None, description="Age or apparent age of the character if mentioned")
+    traits: Optional[List[str]] = Field(default=[], description="New physical or personality traits revealed")
+    knowledge_gained: Optional[List[str]] = Field(default=[], description="Facts this character learned in this chapter")
+    knowledge_lacks: Optional[List[str]] = Field(default=[], description="Explicit facts this character is UNAWARE of")
 
 class CharacterInteraction(BaseModel):
     character_a: str
@@ -25,9 +26,7 @@ class ChapterExtraction(BaseModel):
     interactions: List[CharacterInteraction]
     world_lore: List[WorldLoreUpdate]
 
-# --- Database Initialization ---
-# database.py - Enhanced schema
-def init_db(db_path="data/world_db.sqlite"):
+def init_db(db_path=Config.DB_PATH):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     
