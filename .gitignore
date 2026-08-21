@@ -112,3 +112,24 @@ dmypy.json
 *.njsproj
 *.sln
 *.swp
+
+# ==========================================
+# Project-Specific Exclusions (Novel Agent)
+# ==========================================
+
+# Database & Vector Storage
+data/
+*.sqlite
+*.db
+chroma_db/
+
+# Auto-Generated Lore & Markdown Output
+lore/
+
+# Local Drafts and Generated Reports
+drafts/
+outputs/
+
+# Environment Variables & Local Config
+.env
+.env.local
